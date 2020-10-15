@@ -1,6 +1,18 @@
 <?php
+    require 'constants.php';
 
+    // Create Connection
+    $connection = new mysqli( HOST, USER, PASSWORD, DATABASE );
+    if( $connection->connect_errno ){
+        die( 'Connection failed:' . $connection->connect_error );
+    }
+
+
+    $connection->close();
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
