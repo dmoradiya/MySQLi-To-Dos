@@ -40,7 +40,7 @@
     
     
     // Select From the thingstodo Table
-    $sql = "SELECT * FROM thingstodo";
+    $sql = "SELECT TaskCategory, Task, DueDate, ThingstodoID FROM thingstodo INNER JOIN taskcategory USING(TaskCategoryID)";
     
     // Get the Result query Object
     $result = $connection->query($sql);
@@ -48,13 +48,14 @@
         echo "something went wrong with the query";
         exit();
     }
-
+        
     // Check for Number of rows if no Row found then display message
     if( $result->num_rows === 0 ){
         $things_to_do = "<tr><td colspan='5'>There is no Active Task</td><tr>";    
     
     } else { // Get data from each row
         while( $row = $result->fetch_assoc() ){            
+            
             $things_to_do .= sprintf('  
                 <tr>
                     <td>%s</td>
