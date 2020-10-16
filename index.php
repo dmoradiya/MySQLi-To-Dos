@@ -79,16 +79,32 @@
             );
         }
     }
+
+
+
     /**
     ********************************** Overdue start **********************
     */
 
     // Overdue Insert data from thingstodo Table
 
-    
+    $overdue_insert_sql = "INSERT INTO overdue (ThingstodoID,TaskCategoryID, TaskCategory,Task,DueDate) 
+    SELECT ThingstodoID,TaskCategoryID, TaskCategory,Task,DueDate FROM thingstodo 
+    INNER JOIN taskcategory USING(TaskCategoryID)
+    WHERE DueDate < NOW()";
+    if( !$overdue_insert_result = $connection->query($overdue_insert_sql) ) {
+        die("Could not Insert to the overdue database table");
+    }
+        
 
-
-
+    // Delete Duplicate from the Things to do    
+    $thingstodo_duplicate_delete_sql = "DELETE FROM thingstodo WHERE DueDate < NOW()";
+    if( !$thingstodo_duplicate_delete_result = $connection->query($thingstodo_duplicate_delete_sql) ) {
+        die("Could not Delete from the thingstodo database table");
+    }
+    echo '<pre>';
+    echo print_r($thingstodo_duplicate_delete_result);
+    echo '</pre>';
     // Select From the Overdue Table
     $overdue_sql = "SELECT * FROM overdue";
     
@@ -128,20 +144,25 @@
     }
 
     if( $_POST ){
-        if( $insert = $connection->prepare("INSERT INTO thingstodo(Task, DueDate, TaskCategoryID)VALUE(?, ?, ?)") ){
-            if( $insert->bind_param("ssi", $_POST['task'], $_POST['date'], $_POST['task_category']) ){
-                if( $insert->execute() ){
-                    $message = "Your task added...";
+        if( empty($_POST['task']) ){
+            echo $message = 'Please ADD Task!';
+        }else {
+            if( $insert = $connection->prepare("INSERT INTO thingstodo(Task, DueDate, TaskCategoryID)VALUE(?, ?, ?)") ){
+                if( $insert->bind_param("ssi", $_POST['task'], $_POST['date'], $_POST['task_category']) ){
+                    if( $insert->execute() ){
+                        $message = "Your task added...";
+                    } else {
+                        exit("There was a problem with the execute");
+                    }
                 } else {
-                    exit("There was a problem with the execute");
+                    exit("There was a problem with the bind_param");
                 }
             } else {
-                exit("There was a problem with the bind_param");
+                exit("There was a problem with the prepare statement");
             }
-        } else {
-            exit("There was a problem with the prepare statement");
+            $insert->close();
         }
-        $insert->close();
+       
         
         echo '<pre>';
         echo print_r($_POST);
