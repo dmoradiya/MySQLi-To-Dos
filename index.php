@@ -18,7 +18,7 @@
    
     
     // Select only TaskCategoryID and TaskCategory From the Thingstodo Table
-    $category_sql = "SELECT DISTINCT TaskCategoryID, TaskCategory FROM thingstodo";
+    $category_sql = "SELECT * FROM taskcategory";
     
     // Get the Result query Object
     $category_result = $connection->query($category_sql);
