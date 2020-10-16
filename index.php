@@ -1,16 +1,21 @@
 <?php
+
+
     require 'constants.php';
 
-    $category_select_options = null;
-    $things_to_do = null;
-
-
-    
     // Create Connection
     $connection = new mysqli( HOST, USER, PASSWORD, DATABASE );
     if( $connection->connect_errno ){
         die( 'Connection failed:' . $connection->connect_error );
     }
+
+
+    //  All constants
+    $category_select_options = null;
+    $things_to_do = null;
+    $message = null;
+    
+   
     
     // Select only TaskCategoryID and TaskCategory From the Thingstodo Table
     $category_sql = "SELECT DISTINCT TaskCategoryID, TaskCategory FROM thingstodo";
@@ -32,13 +37,9 @@
             }
     } 
 
-    // Create Connection
-    $connection = new mysqli( HOST, USER, PASSWORD, DATABASE );
-    if( $connection->connect_errno ){
-        die( 'Connection failed:' . $connection->connect_error );
-    }
     
-    // Select From the Table
+    
+    // Select From the thingstodo Table
     $sql = "SELECT * FROM thingstodo";
     
     // Get the Result query Object
@@ -75,6 +76,29 @@
         }
     }
 
+
+    if( $_POST ){
+        if( $insert = $connection->prepare("INSERT INTO thingstodo(Task, DueDate, TaskCategoryID)VALUE(?, ?, ?)") ){
+            if( $insert->bind_param("ssi", $_POST['task'], $_POST['date'], $_POST['task_category']) ){
+                if( $insert->execute() ){
+                    $message = "Your task added...";
+                } else {
+                    exit("There was a problem with the execute");
+                }
+            } else {
+                exit("There was a problem with the bind_param");
+            }
+        } else {
+            exit("There was a problem with the prepare statement");
+        }
+        $insert->close();
+        
+        echo '<pre>';
+        echo print_r($_POST);
+        echo '</pre>';
+
+    }    
+
     $connection->close();
 ?>
 
@@ -92,7 +116,8 @@
     
     <!-- Add Todo Start -->
     <h2>Add Todo</h2>
-    
+
+        
     <form action="#" method="POST" enctype="multipart/form-data">
         <p>
             <label for="task">Task</label>
@@ -113,6 +138,7 @@
             <input type="submit" value="Add new task">
         </p>
     </form>
+    <?php if($message) echo $message; ?>
     <!-- Add Todo end -->
     
     
