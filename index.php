@@ -13,6 +13,7 @@
     //  All constants
     $category_select_options = null;
     $things_to_do = null;
+    $overdue = null;
     $message = null;
     
    
@@ -37,24 +38,26 @@
             }
     } 
 
-    
+    /**
+     * ****************************Things To Do Start************************
+     */
     
     // Select From the thingstodo Table
-    $sql = "SELECT TaskCategory, Task, DueDate, ThingstodoID FROM thingstodo INNER JOIN taskcategory USING(TaskCategoryID)";
+    $thingstodo_sql = "SELECT TaskCategory, Task, DueDate, ThingstodoID FROM thingstodo INNER JOIN taskcategory USING(TaskCategoryID)";
     
     // Get the Result query Object
-    $result = $connection->query($sql);
-    if( !$result ){
+    $thingstodo_result = $connection->query($thingstodo_sql);
+    if( !$thingstodo_result ){
         echo "something went wrong with the query";
         exit();
     }
         
     // Check for Number of rows if no Row found then display message
-    if( $result->num_rows === 0 ){
+    if( $thingstodo_result->num_rows === 0 ){
         $things_to_do = "<tr><td colspan='5'>There is no Active Task</td><tr>";    
     
     } else { // Get data from each row
-        while( $row = $result->fetch_assoc() ){            
+        while( $row = $thingstodo_result->fetch_assoc() ){            
             
             $things_to_do .= sprintf('  
                 <tr>
@@ -62,8 +65,8 @@
                     <td>%s</td>
                     <td>%s</td>
                     <td>
-                        <a href="complete.php?task_id=%d">Complete</a> | 
-                        <a href="delete.php?task_id=%d">Delete</a>
+                        <a href="index.php?task_id=%d">Complete</a> | 
+                        <a href="index.php?task_id=%d">Delete</a>
                     </td>
                 </tr>
                 ',
@@ -76,7 +79,53 @@
             );
         }
     }
+    /**
+    ********************************** Overdue start **********************
+    */
 
+    // Overdue Insert data from thingstodo Table
+
+    
+
+
+
+    // Select From the Overdue Table
+    $overdue_sql = "SELECT * FROM overdue";
+    
+    // Get the Result query Object
+    $overdue_result = $connection->query($overdue_sql);
+    if( !$overdue_result ){
+        echo "something went wrong with the query";
+        exit();
+    }
+    
+    // Check for Number of rows if no Row found then display message
+    if( $overdue_result->num_rows === 0 ){
+        $overdue = "<tr><td colspan='5'>There is no Overdue Task</td><tr>";    
+    
+    } else { // Get data from each row
+        while( $row = $overdue_result->fetch_assoc() ){  
+
+            $overdue .= sprintf('  
+                <tr>
+                    <td>%s</td>
+                    <td>%s</td>
+                    <td>%s</td>
+                    <td>
+                        <a href="index.php?task_id=%d">Complete</a> | 
+                        <a href="index.php?task_id=%d">Delete</a>
+                    </td>
+                </tr>
+                ',
+                $row['TaskCategory'],
+                $row['Task'],
+                $row['DueDate'],
+                $row['ThingstodoID'],
+                $row['ThingstodoID']                
+                
+            );
+        }
+    }
 
     if( $_POST ){
         if( $insert = $connection->prepare("INSERT INTO thingstodo(Task, DueDate, TaskCategoryID)VALUE(?, ?, ?)") ){
@@ -154,10 +203,25 @@
             <th>Complete</th>
             <th>Delete</th>
         </tr>
-        <?php echo $things_to_do; ?>
-        <!-- Things to do end -->
-        
+        <?php echo $things_to_do; ?>              
     </table>
+    <!-- Things to do end --> 
+
+
+    <!-- Overdue start -->
+    <h2>Overdue<h2>
+    <table>
+        <tr>
+            <th>TaskCategory</th>    
+            <th>Task</th>
+            <th>DueDate</th>
+            <th>Complete</th>
+            <th>Delete</th>
+        </tr>
+        <?php echo $overdue; ?>            
+    </table>
+    
+
     
 </body>
 </html>
