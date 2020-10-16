@@ -57,6 +57,18 @@ CREATE TABLE overdue (
 
 
 
+-- Create a new completed Table
+CREATE TABLE completed (
+    CompletedID int(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    ThingstodoID int(10) NOT NULL,     
+    TaskCategoryID tinyint(1) NOT NULL,  
+    TaskCategory varchar(8) NOT NULL,   
+    Task varchar(200) NOT NULL,
+    DueDate date NOT NULL               
+);
+
+
+
 
 INSERT INTO overdue (ThingstodoID,TaskCategoryID, TaskCategory,Task,DueDate) 
 SELECT ThingstodoID,TaskCategoryID, TaskCategory,Task,DueDate FROM thingstodo 
