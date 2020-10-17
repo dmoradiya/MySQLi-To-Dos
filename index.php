@@ -15,15 +15,13 @@
     $things_to_do = null;
     $overdue = null;
     $completed = null;
-    $message = null;
-   
+    $message = null;    
     
     
-      
-    
-    
-    
-   
+
+   /**
+    *########################## Populate Form Select Options from TaskCategory Table ##################################    
+    */
     
     // Select only TaskCategoryID and TaskCategory From the Thingstodo Table
     $category_sql = "SELECT * FROM taskcategory";
@@ -46,58 +44,33 @@
     } 
 
     /**
-     * ****************************Things To Do Start************************
+     * ################### Get Form Data ###################
      */
-    
-    // Select From the thingstodo Table
-    $thingstodo_sql = "SELECT TaskCategory, Task, DueDate, ThingstodoID FROM thingstodo INNER JOIN taskcategory USING(TaskCategoryID)";
-    
-    // Get the Result query Object
-    $thingstodo_result = $connection->query($thingstodo_sql);
-    if( !$thingstodo_result ){
-        echo "something went wrong with the query";
-        exit();
-    }
-        
-    // Check for Number of rows if no Row found then display message
-    if( $thingstodo_result->num_rows === 0 ){
-        $things_to_do = "<tr><td colspan='5'>There is no Active Task</td><tr>";    
-    
-    } else { // Get data from each row
-        while( $row = $thingstodo_result->fetch_assoc() ){            
-            
-            $things_to_do .= sprintf('  
-                <tr>
-                    <td>%s</td>
-                    <td>%s</td>
-                    <td>%s</td>
-                    <td>
-                        <form method="GET" action="#">
-                        <input type="hidden" value="%d" name="task_complete_id">                        
-                        <input type="submit" value="Complete">                                                 
-                        </form> 
 
-                        <form method="GET" action="#">                        
-                        <input type="hidden" value="%d" name="task_delete_id">                                                   
-                        <input type="submit" value="Delete">                            
-                        </form>       
-                    </td>
-                </tr>
-                ',
-                $row['TaskCategory'],
-                $row['Task'],
-                $row['DueDate'],
-                $row['ThingstodoID'],
-                $row['ThingstodoID']                
-               
-            );
-        }
-    }
+    if( $_GET ){
+        if( empty($_GET['task']) ){
+            echo $message = 'Please ADD Task!';
+        }else {
+            if( $insert = $connection->prepare("INSERT INTO thingstodo(Task, DueDate, TaskCategoryID)VALUE(?, ?, ?)") ){
+                if( $insert->bind_param("ssi", $_GET['task'], $_GET['date'], $_GET['task_category']) ){
+                    if( $insert->execute() ){
+                        $message = "Your task added...";
+                    } else {
+                        exit("There was a problem with the execute");
+                    }
+                } else {
+                    exit("There was a problem with the bind_param");
+                }
+            } else {
+                exit("There was a problem with the prepare statement");
+            }
+            $insert->close();           
+        }              
 
-   
+    }       
 
     /**
-    ********************************** Overdue start **********************
+    *########################## Overdue Section start ########################
     */
 
     // Overdue Insert data from thingstodo Table
@@ -115,53 +88,7 @@
     $thingstodo_duplicate_delete_sql = "DELETE FROM thingstodo WHERE DueDate < NOW()";
     if( !$thingstodo_duplicate_delete_result = $connection->query($thingstodo_duplicate_delete_sql) ) {
         die("Could not Delete from the thingstodo database table");
-    }
-    
-    
-    // Select From the Overdue Table
-    $overdue_sql = "SELECT * FROM overdue";
-    
-    // Get the Result query Object
-    $overdue_result = $connection->query($overdue_sql);
-    if( !$overdue_result ){
-        echo "something went wrong with the query";
-        exit();
-    }
-    
-    // Check for Number of rows if no Row found then display message
-    if( $overdue_result->num_rows === 0 ){
-        $overdue = "<tr><td colspan='5'>There is no Overdue Task</td><tr>";    
-    
-    } else { // Get data from each row
-        while( $row = $overdue_result->fetch_assoc() ){  
-
-            $overdue .= sprintf('  
-                <tr>
-                    <td>%s</td>
-                    <td>%s</td>
-                    <td>%s</td>
-                    <td>
-                        <form method="GET" action="#">
-                        <input type="hidden" value="%d" name="task_complete_id">                        
-                        <input type="submit" value="Complete">                                                 
-                        </form> 
-
-                        <form method="GET" action="#">                        
-                        <input type="hidden" value="%d" name="task_delete_id">                                                   
-                        <input type="submit" value="Delete">                            
-                        </form>      
-                    </td>
-                </tr>
-                ',
-                $row['TaskCategory'],
-                $row['Task'],
-                $row['DueDate'],
-                $row['ThingstodoID'],
-                $row['ThingstodoID']                
-                
-            );
-        }
-    }
+    }     
     
 
     /**
@@ -227,9 +154,7 @@
             die("Could not add to completed from the overdue database table");
         }
     }
-    echo '<pre>';
-    var_dump($task_complete_id. 'complete');
-    echo '</pre>';
+   
 
 
     if(isset($_GET['task_delete_id'])){
@@ -250,15 +175,14 @@
         if( !$completed_delete_result = $connection->query($completed_delete_sql) ) {
             die("Could not Deleted Task From the completed database table");
         }
-        
+
         /********************************** DELETE FINISH ********************* */
 
     }
-    echo '<pre>';
-    var_dump($task_delete_id. 'delete');
-    echo '</pre>';
-
-
+   
+    /**
+     * #################### Display Completed Task #######################
+     */
 
     // Select From the Completed Table
     $completed_sql = "SELECT * FROM completed";
@@ -298,34 +222,105 @@
         }
     }
 
+     /**
+    *########################## Display Overdue task ########################
+    */
+    // Select From the Overdue Table
+    $overdue_sql = "SELECT * FROM overdue";
+        
+    // Get the Result query Object
+    $overdue_result = $connection->query($overdue_sql);
+    if( !$overdue_result ){
+        echo "something went wrong with the query";
+        exit();
+    }
 
+    // Check for Number of rows if no Row found then display message
+    if( $overdue_result->num_rows === 0 ){
+        $overdue = "<tr><td colspan='5'>There is no Overdue Task</td><tr>";    
 
+    } else { // Get data from each row
+        while( $row = $overdue_result->fetch_assoc() ){  
 
-    if( $_GET ){
-        if( empty($_GET['task']) ){
-            echo $message = 'Please ADD Task!';
-        }else {
-            if( $insert = $connection->prepare("INSERT INTO thingstodo(Task, DueDate, TaskCategoryID)VALUE(?, ?, ?)") ){
-                if( $insert->bind_param("ssi", $_GET['task'], $_GET['date'], $_GET['task_category']) ){
-                    if( $insert->execute() ){
-                        $message = "Your task added...";
-                    } else {
-                        exit("There was a problem with the execute");
-                    }
-                } else {
-                    exit("There was a problem with the bind_param");
-                }
-            } else {
-                exit("There was a problem with the prepare statement");
-            }
-            $insert->close();
-            //header('location: index.php');
+            $overdue .= sprintf('  
+                <tr>
+                    <td>%s</td>
+                    <td>%s</td>
+                    <td>%s</td>
+                    <td>
+                        <form method="GET" action="#">
+                        <input type="hidden" value="%d" name="task_complete_id">                        
+                        <input type="submit" value="Complete">                                                 
+                        </form> 
+
+                        <form method="GET" action="#">                        
+                        <input type="hidden" value="%d" name="task_delete_id">                                                   
+                        <input type="submit" value="Delete">                            
+                        </form>      
+                    </td>
+                </tr>
+                ',
+                $row['TaskCategory'],
+                $row['Task'],
+                $row['DueDate'],
+                $row['ThingstodoID'],
+                $row['ThingstodoID']                
+                
+            );
         }
-        
-        
-        
+    }
 
-    }    
+    /**
+     * ########################### Display Thingstodo Task #############################
+     */
+    
+    // Select From the thingstodo Table
+    $thingstodo_sql = "SELECT TaskCategory, Task, DueDate, ThingstodoID FROM thingstodo INNER JOIN taskcategory USING(TaskCategoryID)";
+    
+    // Get the Result query Object
+    $thingstodo_result = $connection->query($thingstodo_sql);
+    if( !$thingstodo_result ){
+        echo "something went wrong with the query";
+        exit();
+    }
+        
+    // Check for Number of rows if no Row found then display message
+    if( $thingstodo_result->num_rows === 0 ){
+        $things_to_do = "<tr><td colspan='5'>There is no Active Task</td><tr>";    
+    
+    } else { // Get data from each row
+        while( $row = $thingstodo_result->fetch_assoc() ){            
+            
+            $things_to_do .= sprintf('  
+                <tr>
+                    <td>%s</td>
+                    <td>%s</td>
+                    <td>%s</td>
+                    <td>
+                        <form method="GET" action="#">
+                        <input type="hidden" value="%d" name="task_complete_id">                        
+                        <input type="submit" value="Complete">                                                 
+                        </form> 
+
+                        <form method="GET" action="#">                        
+                        <input type="hidden" value="%d" name="task_delete_id">                                                   
+                        <input type="submit" value="Delete">                            
+                        </form>       
+                    </td>
+                </tr>
+                ',
+                $row['TaskCategory'],
+                $row['Task'],
+                $row['DueDate'],
+                $row['ThingstodoID'],
+                $row['ThingstodoID']                
+               
+            );
+        }
+    }
+
+
+    
 
     $connection->close();
         
