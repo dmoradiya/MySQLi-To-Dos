@@ -16,8 +16,12 @@
     $overdue = null;
     $completed = null;
     $message = null;
-    $task_complete_id = null;   
-    $task_delete_id = null;   
+   
+    
+    
+      
+    
+    
     
    
     
@@ -68,8 +72,15 @@
                     <td>%s</td>
                     <td>%s</td>
                     <td>
-                        <a href="index.php?task_complete_id=%d">Complete</a> | 
-                        <a href="index.php?task_delete_id=%d">Delete</a>
+                        <form method="GET" action="#">
+                        <input type="hidden" value="%d" name="task_complete_id">                        
+                        <input type="submit" value="Complete">                                                 
+                        </form> 
+
+                        <form method="GET" action="#">                        
+                        <input type="hidden" value="%d" name="task_delete_id">                                                   
+                        <input type="submit" value="Delete">                            
+                        </form>       
                     </td>
                 </tr>
                 ',
@@ -78,12 +89,12 @@
                 $row['DueDate'],
                 $row['ThingstodoID'],
                 $row['ThingstodoID']                
-                
+               
             );
         }
     }
 
-
+   
 
     /**
     ********************************** Overdue start **********************
@@ -130,8 +141,15 @@
                     <td>%s</td>
                     <td>%s</td>
                     <td>
-                        <a href="index.php?task_complete_id=%d">Complete</a> | 
-                        <a href="index.php?task_delete_id=%d">Delete</a>
+                        <form method="GET" action="#">
+                        <input type="hidden" value="%d" name="task_complete_id">                        
+                        <input type="submit" value="Complete">                                                 
+                        </form> 
+
+                        <form method="GET" action="#">                        
+                        <input type="hidden" value="%d" name="task_delete_id">                                                   
+                        <input type="submit" value="Delete">                            
+                        </form>      
                     </td>
                 </tr>
                 ',
@@ -144,7 +162,7 @@
             );
         }
     }
-
+    
 
     /**
      * ****************** Completed to do **************************************
@@ -152,16 +170,19 @@
 
      // Sanitize All the Input
 
-    if( empty($_POST )){
-        if( !isset($_GET['task_complete_id']) || $_GET['task_complete_id'] === "" ) {
-            exit("You have reached this page by mistake");
-        }
-        if( filter_var($_GET['task_complete_id'], FILTER_VALIDATE_INT) ) {
-            $task_complete_id = $_GET['task_complete_id'];
-        } else {
-            exit("An incorrect value for Task ID was used");
-        }
-    
+    // if( isset($_GET) ){
+        // if( !isset($_GET['task_complete_id']) || $_GET['task_complete_id'] === "" ) {
+        //     exit("You have reached this page by mistake");
+        // }
+        // if( filter_var($_GET['task_complete_id'], FILTER_VALIDATE_INT) ) {
+        //     $task_complete_id = $_GET['task_complete_id'];
+        // } else {
+        //     exit("An incorrect value for Task ID was used");
+        // }
+        // var_dump($_GET['task_complete_id']);
+        // $task_complete_id = $_GET['task_complete_id'];
+        // echo 'GET  empty';
+        
     
     //     if( !isset($_GET['task_delete_id']) || $_GET['task_delete_id'] === "" ) {
     //         exit("You have reached this page by mistake");
@@ -171,60 +192,72 @@
     //     } else {
     //         exit("An incorrect value for Task ID was used");
     //     }
-    }
+    //}
     
-
-    //Completed Insert data from thingstodo Table
+    if(isset($_GET['task_complete_id'])){
+        //Completed Insert data from thingstodo Table
     
+        $task_complete_id = $_GET['task_complete_id'];
 
-    $completed_thingstodo_insert_sql = "INSERT INTO completed (ThingstodoID,TaskCategoryID, TaskCategory,Task,DueDate) 
-    SELECT ThingstodoID,TaskCategoryID, TaskCategory,Task,DueDate FROM thingstodo 
-    INNER JOIN taskcategory USING(TaskCategoryID)
-    WHERE ThingstodoID = $task_complete_id";
-    if( !$completed_thingstodo_insert_result = $connection->query($completed_thingstodo_insert_sql) ) {
-        die("Could not Insert to the completed database table");
+        $completed_thingstodo_insert_sql = "INSERT INTO completed (ThingstodoID,TaskCategoryID, TaskCategory,Task,DueDate) 
+        SELECT ThingstodoID,TaskCategoryID, TaskCategory,Task,DueDate FROM thingstodo 
+        INNER JOIN taskcategory USING(TaskCategoryID)
+        WHERE ThingstodoID = $task_complete_id";
+        if( !$completed_thingstodo_insert_result = $connection->query($completed_thingstodo_insert_sql) ) {
+            die("Could not Insert to the completed database table");
+        }
+
+        // completed Insert data from overdue Table
+        $completed_overdue_insert_sql = "INSERT INTO completed (ThingstodoID,TaskCategoryID, TaskCategory,Task,DueDate) 
+        SELECT ThingstodoID,TaskCategoryID, TaskCategory,Task,DueDate FROM overdue     
+        WHERE ThingstodoID = $task_complete_id";
+        if( !$completed_overdue_insert_result = $connection->query($completed_overdue_insert_sql) ) {
+            die("Could not Insert to the completed database table");
+        }
+
+        // Delete Duplicate from the Things to do    
+        $completed_thingstodo_duplicate_delete_sql = "DELETE FROM thingstodo WHERE ThingstodoID = $task_complete_id";
+        if( !$completed_thingstodo_duplicate_delete_result = $connection->query($completed_thingstodo_duplicate_delete_sql) ) {
+            die("Could not add to completed from the thingstodo database table");
+        }
+
+        // Delete Duplicate from the Overdue    
+        $completed_overdue_duplicate_delete_sql = "DELETE FROM overdue WHERE ThingstodoID = $task_complete_id";
+        if( !$completed_overdue_duplicate_delete_result = $connection->query($completed_overdue_duplicate_delete_sql) ) {
+            die("Could not add to completed from the overdue database table");
+        }
     }
+    echo '<pre>';
+    var_dump($task_complete_id. 'complete');
+    echo '</pre>';
 
-     // completed Insert data from overdue Table
-    $completed_overdue_insert_sql = "INSERT INTO completed (ThingstodoID,TaskCategoryID, TaskCategory,Task,DueDate) 
-    SELECT ThingstodoID,TaskCategoryID, TaskCategory,Task,DueDate FROM overdue     
-    WHERE ThingstodoID = $task_complete_id";
-    if( !$completed_overdue_insert_result = $connection->query($completed_overdue_insert_sql) ) {
-        die("Could not Insert to the completed database table");
+
+    if(isset($_GET['task_delete_id'])){
+
+        $task_delete_id = $_GET['task_delete_id'];
+        /********************************** DELETE START ********************** */
+        $thingstodo_delete_sql = "DELETE FROM thingstodo WHERE ThingstodoID = $task_delete_id";
+        if( !$thingstodo_delete_result = $connection->query($thingstodo_delete_sql) ) {
+            die("Could not Deleted Task From the Thingstodo database table");
+        }
+
+        $overdue_delete_sql = "DELETE FROM overdue WHERE ThingstodoID = $task_delete_id";
+        if( !$overdue_delete_result = $connection->query($overdue_delete_sql) ) {
+            die("Could not Deleted Task From the overdue database table");
+        }
+
+        $completed_delete_sql = "DELETE FROM completed WHERE ThingstodoID = $task_delete_id";
+        if( !$completed_delete_result = $connection->query($completed_delete_sql) ) {
+            die("Could not Deleted Task From the completed database table");
+        }
+        
+        /********************************** DELETE FINISH ********************* */
+
     }
+    echo '<pre>';
+    var_dump($task_delete_id. 'delete');
+    echo '</pre>';
 
-     // Delete Duplicate from the Things to do    
-    $completed_thingstodo_duplicate_delete_sql = "DELETE FROM thingstodo WHERE ThingstodoID = $task_complete_id";
-    if( !$completed_thingstodo_duplicate_delete_result = $connection->query($completed_thingstodo_duplicate_delete_sql) ) {
-        die("Could not add to completed from the thingstodo database table");
-    }
-
-     // Delete Duplicate from the Overdue    
-    $completed_overdue_duplicate_delete_sql = "DELETE FROM overdue WHERE ThingstodoID = $task_complete_id";
-    if( !$completed_overdue_duplicate_delete_result = $connection->query($completed_overdue_duplicate_delete_sql) ) {
-        die("Could not add to completed from the overdue database table");
-    }
-
-/********************************** DELETE START ********************** */
-    // $thingstodo_delete_sql = "DELETE FROM thingstodo WHERE ThingstodoID = $task_delete_id";
-    // if( !$thingstodo_delete_result = $connection->query($thingstodo_delete_sql) ) {
-    //     die("Could not Deleted Task From the Thingstodo database table");
-    // }
-
-    // $overdue_delete_sql = "DELETE FROM overdue WHERE ThingstodoID = $task_delete_id";
-    // if( !$overdue_delete_result = $connection->query($overdue_delete_sql) ) {
-    //     die("Could not Deleted Task From the overdue database table");
-    // }
-
-    // $completed_delete_sql = "DELETE FROM completed WHERE ThingstodoID = $task_delete_id";
-    // if( !$completed_delete_result = $connection->query($completed_delete_sql) ) {
-    //     die("Could not Deleted Task From the completed database table");
-    // }
-
-
-
-
-/********************************** DELETE FINISH ********************* */
 
 
     // Select From the Completed Table
@@ -250,7 +283,10 @@
                     <td>%s</td>
                     <td>%s</td>
                     <td>                         
-                        <a href="index.php?task_delete_id=%d">Delete</a>
+                        <form method="GET" action="#">                        
+                        <input type="hidden" value="%d" name="task_delete_id">                                                   
+                        <input type="submit" value="Delete">                            
+                        </form>   
                     </td>
                 </tr>
                 ',
@@ -265,12 +301,12 @@
 
 
 
-    if( $_POST ){
-        if( empty($_POST['task']) ){
+    if( $_GET ){
+        if( empty($_GET['task']) ){
             echo $message = 'Please ADD Task!';
         }else {
             if( $insert = $connection->prepare("INSERT INTO thingstodo(Task, DueDate, TaskCategoryID)VALUE(?, ?, ?)") ){
-                if( $insert->bind_param("ssi", $_POST['task'], $_POST['date'], $_POST['task_category']) ){
+                if( $insert->bind_param("ssi", $_GET['task'], $_GET['date'], $_GET['task_category']) ){
                     if( $insert->execute() ){
                         $message = "Your task added...";
                     } else {
@@ -283,9 +319,9 @@
                 exit("There was a problem with the prepare statement");
             }
             $insert->close();
-            header('location: index.php');
+            //header('location: index.php');
         }
-       
+        
         
         
 
@@ -311,7 +347,7 @@
     <h2>Add Todo</h2>
 
         
-    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" enctype="multipart/form-data">
+    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="GET" enctype="multipart/form-data">
         <p>
             <label for="task">Task</label>
             <input type="text" name="task" id="task">
