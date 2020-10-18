@@ -15,8 +15,18 @@
     $things_to_do = null;
     $overdue = null;
     $completed = null;
-    $message = null;    
+    $message = null;  
     
+    
+
+    // Input sanitization Function
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = stripcslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+     }
     
 
    /**
@@ -48,11 +58,12 @@
      */
 
     if( $_GET ){
-        if( empty($_GET['task']) ){
-            echo $message = 'Please ADD Task!';
-        }else {
+       
+        if( !empty($_GET['task']) && !empty($_GET['date']) && !empty($_GET['task_category'])){
+        
+            $task = test_input($_GET['task']);
             if( $insert = $connection->prepare("INSERT INTO thingstodo(Task, DueDate, TaskCategoryID)VALUE(?, ?, ?)") ){
-                if( $insert->bind_param("ssi", $_GET['task'], $_GET['date'], $_GET['task_category']) ){
+                if( $insert->bind_param("ssi", $task, $_GET['date'], $_GET['task_category']) ){
                     if( $insert->execute() ){
                         $message = "Your task added...";
                     } else {
@@ -68,7 +79,7 @@
         }              
 
     }       
-
+    
     /**
     *########################## Overdue Section start ########################
     */
@@ -325,18 +336,18 @@
     <h2>Add Todo</h2>
 
         
-    <form class=main-form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="GET" enctype="multipart/form-data">
+    <form class="main-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="GET" enctype="multipart/form-data">
         <p>
             <label for="task">Task</label>
-            <input type="text" name="task" id="task">
+            <input type="text" name="task" id="task" required>
         </p>
         <p>
             <label for="date">Due date</label>
-            <input type="date" name="date" id="date" min="2020-01-01" max="2021-01-01">
+            <input type="date" name="date" id="date" min="2020-01-01" max="2021-01-01" required>
         </p>
         <p>
             <label for="task_category">Task Category</label>
-            <select name="task_category" id="task_category">
+            <select name="task_category" id="task_category" required>
                 <option value="">Pick one</option>
                 <?php echo $category_select_options; ?>
             </select>
@@ -345,7 +356,7 @@
             <input type="submit" value="Add new task">
         </p>
     </form>
-    <?php if($message) echo $message; ?>
+    <p id="message"><?php if($message) echo $message; ?></p>
     <!-- Add Todo end -->
     
     
