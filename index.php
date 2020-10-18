@@ -1,6 +1,4 @@
 <?php
-
-
     require 'constants.php';
     
     // Create Connection
@@ -9,15 +7,12 @@
         die( 'Connection failed:' . $connection->connect_error );
     }
 
-
     //  All constants
     $category_select_options = null;
     $things_to_do = null;
     $overdue = null;
     $completed = null;
-    $message = null;  
-    
-    
+    $message = null;         
 
     // Input sanitization Function    
     // Citation Start : 
@@ -55,7 +50,6 @@
                 );
             }
     } 
-
     /**
      * ################### Get Form Data ###################
      */
@@ -78,9 +72,8 @@
             } else {
                 exit("There was a problem with the prepare statement");
             }
-            $insert->close();           
-        }              
-
+            $insert->close();        
+        }
     }       
     
     /**
@@ -102,8 +95,7 @@
     $thingstodo_duplicate_delete_sql = "DELETE FROM thingstodo WHERE DueDate < NOW()";
     if( !$thingstodo_duplicate_delete_result = $connection->query($thingstodo_duplicate_delete_sql) ) {
         die("Could not Delete from the thingstodo database table");
-    }     
-    
+    }         
 
     /**
      * ######################## Complete And Delete Buttons ########################**
@@ -171,9 +163,7 @@
         if( !$completed_delete_result = $connection->query($completed_delete_sql) ) {
             die("Could not Deleted Task From the completed database table");
         }      
-
-    }
-   
+    }   
     /**
      * #################### Display Completed Task #######################
      */
@@ -311,17 +301,11 @@
                
             );
         }
-    }
+    }   
 
-
-    
-
-    $connection->close();
-        
+    $connection->close();        
 ?>
-
-
-
+<!----------------- HTML PART START ----------------------->
 <!DOCTYPE html>
 <html lang="en">
 <head>

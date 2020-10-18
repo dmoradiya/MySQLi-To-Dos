@@ -49,7 +49,7 @@ input[type=date], select {
      
 }
 .main-form input[type=submit] {    
-    background-color: #1d748a;
+    background-color:rgb(32, 115, 170);
     border: none;
     color: white;
     padding: .4rem 1rem;

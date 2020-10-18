@@ -17,6 +17,6 @@ To demonstrate PHP, SQL skills using my To do App
 
 
 ## Extra Feature :
-- Added input data sanitization function to filter the data before sending to the database.
+- Added input data sanitization function to filter out the data before sending to the database.
 
 ## Trello :https://trello.com/b/i4D8UbCW/mysqli-assignment-to-do-list 
