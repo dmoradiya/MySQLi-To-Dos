@@ -84,7 +84,7 @@
     }
         
 
-    // Delete Duplicate from the Things to do    
+    // Delete Duplicate(s) from the Things to do    
     $thingstodo_duplicate_delete_sql = "DELETE FROM thingstodo WHERE DueDate < NOW()";
     if( !$thingstodo_duplicate_delete_result = $connection->query($thingstodo_duplicate_delete_sql) ) {
         die("Could not Delete from the thingstodo database table");
@@ -92,7 +92,7 @@
     
 
     /**
-     * ****************** Completed to do **************************************
+     * ######################## Complete And Delete Buttons ########################**
      */
 
      // Sanitize All the Input
@@ -155,12 +155,12 @@
         }
     }
    
-
+    /********************************** DELETE BUTTON START ********************** */
 
     if(isset($_GET['task_delete_id'])){
 
         $task_delete_id = $_GET['task_delete_id'];
-        /********************************** DELETE START ********************** */
+        
         $thingstodo_delete_sql = "DELETE FROM thingstodo WHERE ThingstodoID = $task_delete_id";
         if( !$thingstodo_delete_result = $connection->query($thingstodo_delete_sql) ) {
             die("Could not Deleted Task From the Thingstodo database table");
@@ -174,9 +174,7 @@
         $completed_delete_sql = "DELETE FROM completed WHERE ThingstodoID = $task_delete_id";
         if( !$completed_delete_result = $connection->query($completed_delete_sql) ) {
             die("Could not Deleted Task From the completed database table");
-        }
-
-        /********************************** DELETE FINISH ********************* */
+        }      
 
     }
    

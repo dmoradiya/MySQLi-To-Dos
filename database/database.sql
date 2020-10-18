@@ -1,13 +1,12 @@
-----------------------------------
-------DATABASE : 'mytodolist'-----
-----------------------------------
+-------------------------------------
+------ DATABASE : `mytodolist`  -----
+-------------------------------------
 
 
 DROP TABLE IF EXISTS thingstodo;
-
 DROP TABLE IF EXISTS taskcategory;
-
 DROP TABLE IF EXISTS Overdue;
+DROP TABLE IF EXISTS completed;
 
 
 -- Create a new Task-Category Table
@@ -19,7 +18,8 @@ CREATE TABLE taskcategory (
 INSERT INTO taskcategory (TaskCategory)
 VALUES
 ( 'HomeWork' ),
-( 'Chores' );
+( 'Chores' ),
+( 'other' );
 
 
 -- Create a new Things-to-do Table
@@ -43,7 +43,7 @@ VALUES
 ( 'Learn JavaScript', '2020-10-15', 1 ),
 ( 'Learn Sql', '2020-10-12', 1 ),
 ( 'Learn React', '2020-10-11', 1 ),
-( 'Learn CSS', '2020-10-10', 1 );
+( 'Exercise', '2020-10-10', 3 );
 
 -- Create a new Overdue Table
 CREATE TABLE overdue (
@@ -70,11 +70,7 @@ CREATE TABLE completed (
 
 
 
-INSERT INTO overdue (ThingstodoID,TaskCategoryID, TaskCategory,Task,DueDate) 
-SELECT ThingstodoID,TaskCategoryID, TaskCategory,Task,DueDate FROM thingstodo 
-INNER JOIN taskcategory USING(TaskCategoryID)
-WHERE DueDate > '2020-10-15';
-DELETE FROM thingstodo WHERE DueDate > '2020-10-15';
+
 
 
 
