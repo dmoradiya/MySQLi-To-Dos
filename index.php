@@ -2,7 +2,7 @@
 
 
     require 'constants.php';
-
+    
     // Create Connection
     $connection = new mysqli( HOST, USER, PASSWORD, DATABASE );
     if( $connection->connect_errno ){
@@ -204,7 +204,7 @@
                     <td>%s</td>
                     <td>%s</td>
                     <td>%s</td>
-                    <td>                         
+                    <td class="complete-delete">                         
                         <form method="GET" action="#">                        
                         <input type="hidden" value="%d" name="task_delete_id">                                                   
                         <input type="submit" value="Delete">                            
@@ -245,7 +245,7 @@
                     <td>%s</td>
                     <td>%s</td>
                     <td>%s</td>
-                    <td>
+                    <td class="complete-delete">
                         <form method="GET" action="#">
                         <input type="hidden" value="%d" name="task_complete_id">                        
                         <input type="submit" value="Complete">                                                 
@@ -294,13 +294,13 @@
                     <td>%s</td>
                     <td>%s</td>
                     <td>%s</td>
-                    <td>
-                        <form method="GET" action="#">
+                    <td class="complete-delete">
+                        <form  method="GET" action="#">
                         <input type="hidden" value="%d" name="task_complete_id">                        
                         <input type="submit" value="Complete">                                                 
                         </form> 
 
-                        <form method="GET" action="#">                        
+                        <form  method="GET" action="#">                        
                         <input type="hidden" value="%d" name="task_delete_id">                                                   
                         <input type="submit" value="Delete">                            
                         </form>       
@@ -332,6 +332,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My ToDo List</title>
+    <!-- Style(s) -->
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <!-- Script(s) -->
 </head>
 <body>
     <h1>My ToDo List</h1>
@@ -340,7 +343,7 @@
     <h2>Add Todo</h2>
 
         
-    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="GET" enctype="multipart/form-data">
+    <form class=main-form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="GET" enctype="multipart/form-data">
         <p>
             <label for="task">Task</label>
             <input type="text" name="task" id="task">
