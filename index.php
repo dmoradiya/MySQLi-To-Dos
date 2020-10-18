@@ -93,38 +93,16 @@
 
     /**
      * ######################## Complete And Delete Buttons ########################**
-     */
-
-     // Sanitize All the Input
-
-    // if( isset($_GET) ){
-        // if( !isset($_GET['task_complete_id']) || $_GET['task_complete_id'] === "" ) {
-        //     exit("You have reached this page by mistake");
-        // }
-        // if( filter_var($_GET['task_complete_id'], FILTER_VALIDATE_INT) ) {
-        //     $task_complete_id = $_GET['task_complete_id'];
-        // } else {
-        //     exit("An incorrect value for Task ID was used");
-        // }
-        // var_dump($_GET['task_complete_id']);
-        // $task_complete_id = $_GET['task_complete_id'];
-        // echo 'GET  empty';
-        
-    
-    //     if( !isset($_GET['task_delete_id']) || $_GET['task_delete_id'] === "" ) {
-    //         exit("You have reached this page by mistake");
-    //     }
-    //     if( filter_var($_GET['task_delete_id'], FILTER_VALIDATE_INT) ) {
-    //         $task_delete_id = $_GET['task_delete_id'];
-    //     } else {
-    //         exit("An incorrect value for Task ID was used");
-    //     }
-    //}
+     */    
     
     if(isset($_GET['task_complete_id'])){
         //Completed Insert data from thingstodo Table
-    
-        $task_complete_id = $_GET['task_complete_id'];
+        if( filter_var($_GET['task_complete_id'], FILTER_VALIDATE_INT) ) {
+                $task_complete_id = $_GET['task_complete_id'];
+            } else {
+                exit("An incorrect value for Task ID was used");
+            }  
+       
 
         $completed_thingstodo_insert_sql = "INSERT INTO completed (ThingstodoID,TaskCategoryID, TaskCategory,Task,DueDate) 
         SELECT ThingstodoID,TaskCategoryID, TaskCategory,Task,DueDate FROM thingstodo 
@@ -159,7 +137,11 @@
 
     if(isset($_GET['task_delete_id'])){
 
-        $task_delete_id = $_GET['task_delete_id'];
+        if( filter_var($_GET['task_delete_id'], FILTER_VALIDATE_INT) ) {
+                    $task_delete_id = $_GET['task_delete_id'];
+                } else {
+                    exit("An incorrect value for Task ID was used");
+                }       
         
         $thingstodo_delete_sql = "DELETE FROM thingstodo WHERE ThingstodoID = $task_delete_id";
         if( !$thingstodo_delete_result = $connection->query($thingstodo_delete_sql) ) {
