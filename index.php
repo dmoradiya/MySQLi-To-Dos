@@ -19,7 +19,10 @@
     
     
 
-    // Input sanitization Function
+    // Input sanitization Function    
+    // Citation Start : 
+    // Link : https://www.tutorialspoint.com/php/php_validation_example.htm
+    // Purpose : Filter input data 
     function test_input($data) {
         $data = trim($data);
         $data = stripslashes($data);
@@ -27,7 +30,7 @@
         $data = htmlspecialchars($data);
         return $data;
      }
-    
+    // Citation End
 
    /**
     *########################## Populate Form Select Options from TaskCategory Table ##################################    
