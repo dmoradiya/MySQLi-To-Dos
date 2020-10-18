@@ -204,8 +204,8 @@
                     <td>%s</td>
                     <td>%s</td>
                     <td>%s</td>
-                    <td class="complete-delete">                         
-                        <form method="GET" action="#">                        
+                    <td>                         
+                        <form class="delete-btn" method="GET" action="#">                        
                         <input type="hidden" value="%d" name="task_delete_id">                                                   
                         <input type="submit" value="Delete">                            
                         </form>   
@@ -246,12 +246,12 @@
                     <td>%s</td>
                     <td>%s</td>
                     <td class="complete-delete">
-                        <form method="GET" action="#">
+                        <form class="complete-btn" method="GET" action="#">
                         <input type="hidden" value="%d" name="task_complete_id">                        
                         <input type="submit" value="Complete">                                                 
                         </form> 
 
-                        <form method="GET" action="#">                        
+                        <form class="delete-btn" method="GET" action="#">                        
                         <input type="hidden" value="%d" name="task_delete_id">                                                   
                         <input type="submit" value="Delete">                            
                         </form>      
@@ -295,12 +295,12 @@
                     <td>%s</td>
                     <td>%s</td>
                     <td class="complete-delete">
-                        <form  method="GET" action="#">
+                        <form class="complete-btn"  method="GET" action="#">
                         <input type="hidden" value="%d" name="task_complete_id">                        
                         <input type="submit" value="Complete">                                                 
                         </form> 
 
-                        <form  method="GET" action="#">                        
+                        <form class="delete-btn" method="GET" action="#">                        
                         <input type="hidden" value="%d" name="task_delete_id">                                                   
                         <input type="submit" value="Delete">                            
                         </form>       
@@ -370,13 +370,12 @@
 
     <!-- Things to do start -->
     <h2>Thing to do<h2>
-    <table>
+    <table class="main-table">
         <tr>
             <th>TaskCategory</th>    
             <th>Task</th>
             <th>DueDate</th>
-            <th>Complete</th>
-            <th>Delete</th>
+            <th>Actions</th>
         </tr>
         <?php echo $things_to_do; ?>              
     </table>
@@ -385,25 +384,24 @@
 
     <!-- Overdue start -->
     <h2>Overdue<h2>
-    <table>
+    <table class="main-table overdue-table">
         <tr>
             <th>TaskCategory</th>    
             <th>Task</th>
             <th>DueDate</th>
-            <th>Complete</th>
-            <th>Delete</th>
+            <th>Actions</th>
         </tr>
         <?php echo $overdue; ?>            
     </table>
     
     <!-- Complete start -->
     <h2>Completed<h2>
-    <table>
+    <table class="main-table">
         <tr>
             <th>TaskCategory</th>    
             <th>Task</th>
             <th>DueDate</th>            
-            <th>Delete</th>
+            <th>Actions</th>
         </tr>
         <?php echo $completed; ?>            
     </table>

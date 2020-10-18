@@ -1,10 +1,12 @@
 body {
-    background-color: rgba(1, 31, 31, 0.521);
+    background-color: rgba(18, 112, 112, 0.432);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 h1 {
     font-size: 2rem;
-    border-bottom: .2rem solid white;
+    border-bottom: .8rem double white;
+    text-align: center;
 }
 
 h2 {
@@ -13,6 +15,7 @@ h2 {
 }
 .main-form {    
     display: flex;
+    width: 100%;
     
     
 }
@@ -34,19 +37,20 @@ input[type=date], select {
     background-color: white;
     border: none;
     color:black;
-    padding: 0.5rem;
+    padding: 0.6rem;
     text-decoration: none;
     margin: .5rem;
     cursor: pointer; 
-    width: 40vw;   
+    width: 30vw; 
+     
 }
 .main-form input[type=submit] {    
-    background-color: #4CAF50;
+    background-color: #1d748a;
     border: none;
     color: white;
-    padding: 0.2rem 1rem;;
+    padding: .4rem 1rem;
     text-decoration: none;
-    margin: .8rem 1rem;
+    margin: 0.2rem 0 0 0;
     cursor: pointer; 
     text-align: center;
     font-size: 1.5rem;  
@@ -54,12 +58,60 @@ input[type=date], select {
 }
 table {
     display: flex;
+    border: .2rem solid rgba(0, 0, 0, 0.205);
+    border-radius: .2rem;
+    padding: .5rem .5rem;
 
 }
-table tr {
-    font-weight: lighter;
+.main-table {
+    background-color: rgb(32, 115, 170);    
+    
+}
+.main-table tr th {
+    font-size: 1.2rem;
+    width: 25vw;
+    text-align: left;
+    border-bottom: .2rem solid white;
+    padding-bottom: .5rem;
+}
+.main-table tr td {
+    font-size: 1.2rem;
+    font-weight: lighter; 
+    align-items: flex-start;
+}
+.overdue-table tr td {
+    color: rgba(243, 90, 19, 0.973);
+    font-weight: normal;
+    
 }
 .complete-delete {
     display: flex;
 }
+.complete-btn input[type=submit] {    
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 0.2rem 1rem;;
+    text-decoration: none;
+    margin-top: 1rem;
+    cursor: pointer; 
+    text-align: center;
+    font-size: 1.5rem;  
+       
+}
+.delete-btn input[type=submit] {    
+    background-color: #af4c4c;
+    border: none;
+    color: white;
+    padding: 0.2rem 1rem;;
+    text-decoration: none;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    cursor: pointer; 
+    text-align: center;
+    font-size: 1.5rem;  
+       
+}
+
+
     
