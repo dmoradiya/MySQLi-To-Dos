@@ -186,22 +186,26 @@
         while( $row = $completed_result->fetch_assoc() ){  
 
             $completed .= sprintf('  
-                <tr>
-                    <td>%s</td>
-                    <td>%s</td>
-                    <td>%s</td>
-                    <td>                         
-                        <form class="delete-btn" method="GET" action="#">                        
-                        <input type="hidden" value="%d" name="task_delete_id">                                                   
-                        <input type="submit" value="Delete">                            
-                        </form>   
-                    </td>
-                </tr>
+                <tbody class="bg-gray-200">
+                    <tr class="bg-white border-4 border-gray-200">
+                        <td class="px-16 py-2">%s</td>
+                        <td class="px-16 py-2">%s</td>
+                        <td class="px-16 py-2">%s</td>
+                        <td class="px-16 py-2">
+                            <div class="flex flex-row">
+                                <form class="delete-btn" method="GET" action="#">                        
+                                    <input type="hidden" value="%d" name="task_delete_id">                                                   
+                                    <input class="bg-red-500 text-white px-4 py-2 border rounded-md hover:bg-red-200 hover:border-red-500 hover:text-black " type="submit" value="Delete">                            
+                                </form> 
+                            </div>      
+                        </td>
+                    </tr>
+                </tbody>                
                 ',
                 $row['TaskCategory'],
                 $row['Task'],
-                $row['DueDate'],
-                $row['ThingstodoID']                  
+                $row['DueDate'],               
+                $row['ThingstodoID']                   
             );
         }
     }
@@ -227,29 +231,32 @@
         while( $row = $overdue_result->fetch_assoc() ){  
 
             $overdue .= sprintf('  
-                <tr>
-                    <td>%s</td>
-                    <td>%s</td>
-                    <td>%s</td>
-                    <td class="complete-delete flex flex-row">
-                        <form class="complete-btn" method="GET" action="#">
-                        <input type="hidden" value="%d" name="task_complete_id">                        
-                        <input class="bg-green-500" type="submit" value="Complete">                                                 
-                        </form> 
+                <tbody class="bg-gray-200">
+                    <tr class="bg-white border-4 border-gray-200">
+                        <td class="px-16 py-2">%s</td>
+                        <td class="px-16 py-2">%s</td>
+                        <td class="px-16 py-2">%s</td>
+                        <td class="px-16 py-2">
+                            <div class="flex flex-row">
+                                <form class="complete-btn"  method="GET" action="#">
+                                    <input type="hidden" value="%d" name="task_complete_id">                        
+                                    <input class="bg-green-500 text-white px-4 py-2 border rounded-md hover:bg-green-200 hover:border-green-500 hover:text-black " type="submit" value="Complete">                                                 
+                                </form> 
 
-                        <form class="delete-btn" method="GET" action="#">                        
-                        <input type="hidden" value="%d" name="task_delete_id">                                                   
-                        <input class="bg-red-500 type="submit" value="Delete">                            
-                        </form>      
-                    </td>
-                </tr>
+                                <form class="delete-btn" method="GET" action="#">                        
+                                    <input type="hidden" value="%d" name="task_delete_id">                                                   
+                                    <input class="bg-red-500 text-white px-4 py-2 border rounded-md hover:bg-red-200 hover:border-red-500 hover:text-black " type="submit" value="Delete">                            
+                                </form> 
+                            </div>      
+                        </td>
+                    </tr>
+                </tbody>                
                 ',
                 $row['TaskCategory'],
                 $row['Task'],
                 $row['DueDate'],
                 $row['ThingstodoID'],
-                $row['ThingstodoID']                
-                
+                $row['ThingstodoID']                         
             );
         }
     }
@@ -276,22 +283,27 @@
         while( $row = $thingstodo_result->fetch_assoc() ){            
             
             $things_to_do .= sprintf('  
-                <tr>
-                    <td>%s</td>
-                    <td>%s</td>
-                    <td>%s</td>
-                    <td class="complete-delete">
-                        <form class="complete-btn"  method="GET" action="#">
-                        <input type="hidden" value="%d" name="task_complete_id">                        
-                        <input type="submit" value="Complete">                                                 
-                        </form> 
+                <tbody class="bg-gray-200">
+                    <tr class="bg-white border-4 border-gray-200">
+                            <td class="px-16 py-2">%s</td>
+                            <td class="px-16 py-2">%s</td>
+                            <td class="px-16 py-2">%s</td>
+                            <td class="px-16 py-2">
+                                <div class="flex flex-row">
+                                    <form class="complete-btn"  method="GET" action="#">
+                                    <input type="hidden" value="%d" name="task_complete_id">                        
+                                    <input class="bg-green-500 text-white px-4 py-2 border rounded-md hover:bg-green-200 hover:border-green-500 hover:text-black " type="submit" value="Complete">                                                 
+                                    </form> 
 
-                        <form class="delete-btn" method="GET" action="#">                        
-                        <input type="hidden" value="%d" name="task_delete_id">                                                   
-                        <input type="submit" value="Delete">                            
-                        </form>       
-                    </td>
-                </tr>
+                                    <form class="delete-btn" method="GET" action="#">                        
+                                    <input type="hidden" value="%d" name="task_delete_id">                                                   
+                                    <input class="bg-red-500 text-white px-4 py-2 border rounded-md hover:bg-red-200 hover:border-red-500 hover:text-black " type="submit" value="Delete">                            
+                                    </form> 
+                                </div>      
+                            </td>
+                        </tr>
+                </tbody>
+                
                 ',
                 $row['TaskCategory'],
                 $row['Task'],
@@ -317,15 +329,14 @@
     <!-- Script(s) -->
 </head>
 <body>
-    <section class="mx-104
-     my-auto bg-blue-200 shadow-lg sm:rounded-3xl sm:p-20">
-        <h1 class="">My ToDo List</h1>
+    <section class="mx-1 my-1 h-screen bg-blue-200 bg-opacity-75">
+        <h1 class="font-serif text-center text-3xl pt-0">My ToDo List</h1>
         
         <!-- Add Todo Start -->
-        <h2>Add Todo</h2>
+        <h2 class="font-serif">Add Todo</h2>
 
             
-        <form class="main-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="GET" enctype="multipart/form-data">
+        <form class="flex flex-col bg-blue-300 md:flex-row items-center justify-between relative w-100 h-auto md:h-16 bg-100 shadow-2xl rounded-lg p-8" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="GET" enctype="multipart/form-data">
             <p>
                 <label for="task">Task</label>
                 <input type="text" name="task" id="task" required>
@@ -352,38 +363,42 @@
 
         <!-- Things to do start -->
         <h2>Thing to do<h2>
-        <table class="main-table">
-            <tr>
-                <th>TaskCategory</th>    
-                <th>Task</th>
-                <th>DueDate</th>
-                <th>Actions</th>
-            </tr>
-            <?php echo $things_to_do; ?>              
+        <table class="min-w-full table-auto">
+            <thead class="justify-between">
+                <tr class="bg-gray-800">
+                    <th class="px-16 py-2">
+                        <span class="text-gray-300">TaskCategory</span>
+                    </th>    
+                    <th>
+                        <span class="text-gray-300">Task</span>
+                    </th>
+                    <th>
+                        <span class="text-gray-300">DueDate</span>
+                    </th>
+                    <th>
+                        <span class="text-gray-300">Actions</span>
+                    </th>
+                </tr>                                
+            </thead>             
+            <?php echo $things_to_do; ?>                         
         </table>
         <!-- Things to do end --> 
 
 
         <!-- Overdue start -->
-        <h2>Overdue<h2>
-        <table class="main-table overdue-table">
+      
+        <table class="min-w-full table-auto">  
             <tr>
-                <th>TaskCategory</th>    
-                <th>Task</th>
-                <th>DueDate</th>
-                <th>Actions</th>
-            </tr>
+                <th>Overdue Task</th>                 
+            </tr>         
             <?php echo $overdue; ?>            
         </table>
         
         <!-- Complete start -->
-        <h2>Completed<h2>
-        <table class="main-table">
+       
+        <table class="min-w-full table-auto">
             <tr>
-                <th>TaskCategory</th>    
-                <th>Task</th>
-                <th>DueDate</th>            
-                <th>Actions</th>
+                <th>completed Task</th>                 
             </tr>
             <?php echo $completed; ?>            
         </table>
