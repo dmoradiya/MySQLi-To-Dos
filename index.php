@@ -231,15 +231,15 @@
                     <td>%s</td>
                     <td>%s</td>
                     <td>%s</td>
-                    <td class="complete-delete">
+                    <td class="complete-delete flex flex-row">
                         <form class="complete-btn" method="GET" action="#">
                         <input type="hidden" value="%d" name="task_complete_id">                        
-                        <input type="submit" value="Complete">                                                 
+                        <input class="bg-green-500" type="submit" value="Complete">                                                 
                         </form> 
 
                         <form class="delete-btn" method="GET" action="#">                        
                         <input type="hidden" value="%d" name="task_delete_id">                                                   
-                        <input type="submit" value="Delete">                            
+                        <input class="bg-red-500 type="submit" value="Delete">                            
                         </form>      
                     </td>
                 </tr>
@@ -313,79 +313,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My ToDo List</title>
     <!-- Style(s) -->
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <!-- Script(s) -->
 </head>
 <body>
-    <h1>My ToDo List</h1>
-    
-    <!-- Add Todo Start -->
-    <h2>Add Todo</h2>
-
+    <section class="mx-104
+     my-auto bg-blue-200 shadow-lg sm:rounded-3xl sm:p-20">
+        <h1 class="">My ToDo List</h1>
         
-    <form class="main-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="GET" enctype="multipart/form-data">
-        <p>
-            <label for="task">Task</label>
-            <input type="text" name="task" id="task" required>
-        </p>
-        <p>
-            <label for="date">Due date</label>
-            <input type="date" name="date" id="date" min="2020-01-01" max="2021-01-01" required>
-        </p>
-        <p>
-            <label for="task_category">Task Category</label>
-            <select name="task_category" id="task_category" required>
-                <option value="">Pick one</option>
-                <?php echo $category_select_options; ?>
-            </select>
-        </p>
-        <p>
-            <input type="submit" value="Add new task">
-        </p>
-    </form>
-    <p id="message"><?php if($message) echo $message; ?></p>
-    <!-- Add Todo end -->
-    
-    
+        <!-- Add Todo Start -->
+        <h2>Add Todo</h2>
 
-    <!-- Things to do start -->
-    <h2>Thing to do<h2>
-    <table class="main-table">
-        <tr>
-            <th>TaskCategory</th>    
-            <th>Task</th>
-            <th>DueDate</th>
-            <th>Actions</th>
-        </tr>
-        <?php echo $things_to_do; ?>              
-    </table>
-    <!-- Things to do end --> 
+            
+        <form class="main-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="GET" enctype="multipart/form-data">
+            <p>
+                <label for="task">Task</label>
+                <input type="text" name="task" id="task" required>
+            </p>
+            <p>
+                <label for="date">Due date</label>
+                <input type="date" name="date" id="date" min="2020-01-01" required>
+            </p>
+            <p>
+                <label for="task_category">Task Category</label>
+                <select name="task_category" id="task_category" required>
+                    <option value="">Pick one</option>
+                    <?php echo $category_select_options; ?>
+                </select>
+            </p>
+            <p>
+                <input type="submit" value="Add new task">
+            </p>
+        </form>
+        <p id="message"><?php if($message) echo $message; ?></p>
+        <!-- Add Todo end -->
+        
+        
+
+        <!-- Things to do start -->
+        <h2>Thing to do<h2>
+        <table class="main-table">
+            <tr>
+                <th>TaskCategory</th>    
+                <th>Task</th>
+                <th>DueDate</th>
+                <th>Actions</th>
+            </tr>
+            <?php echo $things_to_do; ?>              
+        </table>
+        <!-- Things to do end --> 
 
 
-    <!-- Overdue start -->
-    <h2>Overdue<h2>
-    <table class="main-table overdue-table">
-        <tr>
-            <th>TaskCategory</th>    
-            <th>Task</th>
-            <th>DueDate</th>
-            <th>Actions</th>
-        </tr>
-        <?php echo $overdue; ?>            
-    </table>
-    
-    <!-- Complete start -->
-    <h2>Completed<h2>
-    <table class="main-table">
-        <tr>
-            <th>TaskCategory</th>    
-            <th>Task</th>
-            <th>DueDate</th>            
-            <th>Actions</th>
-        </tr>
-        <?php echo $completed; ?>            
-    </table>
-
-    
+        <!-- Overdue start -->
+        <h2>Overdue<h2>
+        <table class="main-table overdue-table">
+            <tr>
+                <th>TaskCategory</th>    
+                <th>Task</th>
+                <th>DueDate</th>
+                <th>Actions</th>
+            </tr>
+            <?php echo $overdue; ?>            
+        </table>
+        
+        <!-- Complete start -->
+        <h2>Completed<h2>
+        <table class="main-table">
+            <tr>
+                <th>TaskCategory</th>    
+                <th>Task</th>
+                <th>DueDate</th>            
+                <th>Actions</th>
+            </tr>
+            <?php echo $completed; ?>            
+        </table>
+    </section>   
 </body>
 </html>

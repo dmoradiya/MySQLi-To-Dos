@@ -12,6 +12,8 @@ To demonstrate PHP, SQL skills using my To do App
 ## How to Use :
 - Rename constants.example.php to constants.php
 - enter your HOST, USER, PASSWORD AND DATABASE
+- cd to project directory
+- $ php -S localhost:8000
 - Enter the task that you would like to add
 - take necessary action according to your requirement
 

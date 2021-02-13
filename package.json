@@ -1,0 +1,25 @@
+{
+  "name": "MySQLi-To-Dos",
+  "version": "1.0.0",
+  "description": "To-Do list in PHP using MySQLi.",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "tailwind build src/style.css -o css/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmoradiya/MySQLi-To-Dos.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dmoradiya/MySQLi-To-Dos/issues"
+  },
+  "homepage": "https://github.com/dmoradiya/MySQLi-To-Dos#readme",
+  "dependencies": {
+    "autoprefixer": "^10.2.4",
+    "postcss": "^8.2.6",
+    "tailwindcss": "^2.0.3"
+  }
+}
