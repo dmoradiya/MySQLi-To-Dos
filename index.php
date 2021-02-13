@@ -180,22 +180,23 @@
     
     // Check for Number of rows, if no Row found then display message
     if( $completed_result->num_rows === 0 ){
-        $completed = "<tr><td colspan='4'>There is no completed Task</td><tr>";    
+        // $completed = "<tr><td colspan='4'>There is no completed Task</td><tr>";    
     
     } else { // Get data from each row
         while( $row = $completed_result->fetch_assoc() ){  
 
             $completed .= sprintf('  
                 <tbody class="bg-gray-200">
-                    <tr class="bg-white border-4 border-gray-200">
-                        <td class="px-16 py-2">%s</td>
-                        <td class="px-16 py-2">%s</td>
-                        <td class="px-16 py-2">%s</td>
-                        <td class="px-16 py-2">
+                    <tr class="bg-green-100 border-4 border-gray-200">
+                        <td class="px-16 py-0.5">%s</td>
+                        <td class="px-16 py-0.5">%s</td>
+                        <td class="px-16 py-0.5">%s</td>
+                        <td class="px-16 py-0.5">
                             <div class="flex flex-row">
+                                <div class="invisible bg-green-500 text-white px-4 py-2 border rounded-md hover:bg-green-200 hover:border-green-500 hover:text-black " >Complete</div> 
                                 <form class="delete-btn" method="GET" action="#">                        
                                     <input type="hidden" value="%d" name="task_delete_id">                                                   
-                                    <input class="bg-red-500 text-white px-4 py-2 border rounded-md hover:bg-red-200 hover:border-red-500 hover:text-black " type="submit" value="Delete">                            
+                                    <input class="bg-red-500 text-white px-6 py-2 border rounded-md hover:bg-red-200 hover:border-red-500 hover:text-black " type="submit" value="Delete">                            
                                 </form> 
                             </div>      
                         </td>
@@ -225,18 +226,18 @@
 
     // Check for Number of rows if no Row found then display message
     if( $overdue_result->num_rows === 0 ){
-        $overdue = "<tr><td colspan='5'>There is no Overdue Task</td><tr>";    
+        // $overdue = "<tr><td colspan='5'>There is no Overdue Task</td><tr>";    
 
     } else { // Get data from each row
         while( $row = $overdue_result->fetch_assoc() ){  
 
             $overdue .= sprintf('  
                 <tbody class="bg-gray-200">
-                    <tr class="bg-white border-4 border-gray-200">
-                        <td class="px-16 py-2">%s</td>
-                        <td class="px-16 py-2">%s</td>
-                        <td class="px-16 py-2">%s</td>
-                        <td class="px-16 py-2">
+                    <tr class="bg-red-100 border-4 border-gray-200">
+                        <td class="px-16 py-0.5">%s</td>
+                        <td class="px-16 py-0.5">%s</td>
+                        <td class="px-16 py-0.5">%s</td>
+                        <td class="px-16 py-0.5">
                             <div class="flex flex-row">
                                 <form class="complete-btn"  method="GET" action="#">
                                     <input type="hidden" value="%d" name="task_complete_id">                        
@@ -245,7 +246,7 @@
 
                                 <form class="delete-btn" method="GET" action="#">                        
                                     <input type="hidden" value="%d" name="task_delete_id">                                                   
-                                    <input class="bg-red-500 text-white px-4 py-2 border rounded-md hover:bg-red-200 hover:border-red-500 hover:text-black " type="submit" value="Delete">                            
+                                    <input class="bg-red-500 text-white px-6 py-2 border rounded-md hover:bg-red-200 hover:border-red-500 hover:text-black " type="submit" value="Delete">                            
                                 </form> 
                             </div>      
                         </td>
@@ -284,11 +285,11 @@
             
             $things_to_do .= sprintf('  
                 <tbody class="bg-gray-200">
-                    <tr class="bg-white border-4 border-gray-200">
-                            <td class="px-16 py-2">%s</td>
-                            <td class="px-16 py-2">%s</td>
-                            <td class="px-16 py-2">%s</td>
-                            <td class="px-16 py-2">
+                    <tr class="bg-blue-50 border-4 border-gray-200">
+                            <td class="px-16 py-0.5">%s</td>
+                            <td class="px-16 py-0.5">%s</td>
+                            <td class="px-16 py-0.5">%s</td>
+                            <td class="px-16 py-0.5">
                                 <div class="flex flex-row">
                                     <form class="complete-btn"  method="GET" action="#">
                                     <input type="hidden" value="%d" name="task_complete_id">                        
@@ -297,7 +298,7 @@
 
                                     <form class="delete-btn" method="GET" action="#">                        
                                     <input type="hidden" value="%d" name="task_delete_id">                                                   
-                                    <input class="bg-red-500 text-white px-4 py-2 border rounded-md hover:bg-red-200 hover:border-red-500 hover:text-black " type="submit" value="Delete">                            
+                                    <input class="bg-red-500 text-white px-6 py-2 border rounded-md hover:bg-red-200 hover:border-red-500 hover:text-black " type="submit" value="Delete">                            
                                     </form> 
                                 </div>      
                             </td>
@@ -329,31 +330,30 @@
     <!-- Script(s) -->
 </head>
 <body>
-    <section class="mx-1 my-1 h-screen bg-blue-200 bg-opacity-75">
-        <h1 class="font-serif text-center text-3xl pt-0">My ToDo List</h1>
+    <section class="mx-1 my-1 h-screen bg-blue-100 bg-opacity-75">
+        <h1 class="font-serif text-center text-3xl mt-0 py-5">My ToDo List</h1>
         
         <!-- Add Todo Start -->
-        <h2 class="font-serif">Add Todo</h2>
-
-            
-        <form class="flex flex-col bg-blue-300 md:flex-row items-center justify-between relative w-100 h-auto md:h-16 bg-100 shadow-2xl rounded-lg p-8" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="GET" enctype="multipart/form-data">
-            <p>
-                <label for="task">Task</label>
-                <input type="text" name="task" id="task" required>
+       
+        <form class="flex flex-row justify-evenly py-4" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="GET" enctype="multipart/form-data">
+            <p>               
+                <input class="rounded-lg p-1 border-t mr-0 border-b border-l text-gray-800 border-gray-200 m-white" placeholder="Add Task..." type="text" name="task" id="task" required>
+                <label class="invisible" for="task">Task</label>
+            </p>
+            <p>              
+                <input class="rounded-l-lg p-1 border-t mr-0 border-b border-l text-gray-800 border-gray-200 m-white" type="date" name="date" id="date" min="2020-01-01" required>
+                <label class="px-1 rounded-r-lg bg-blue-300  text-gray-800 font-bold p-1 uppercase border-blue-500  border-t border-b border-r" for="date">Due date</label>
             </p>
             <p>
-                <label for="date">Due date</label>
-                <input type="date" name="date" id="date" min="2020-01-01" required>
-            </p>
-            <p>
-                <label for="task_category">Task Category</label>
-                <select name="task_category" id="task_category" required>
+                
+                <select class="rounded-l-lg p-1 border-t mr-0 border-b border-l text-gray-800 border-gray-200 bg-white" name="task_category" id="task_category" required>
                     <option value="">Pick one</option>
                     <?php echo $category_select_options; ?>
                 </select>
+                <label class="px-1 rounded-r-lg bg-blue-300  text-gray-800 font-bold p-1 uppercase border-blue-500 border-t border-b border-r" for="task_category">Task Category</label>
             </p>
             <p>
-                <input type="submit" value="Add new task">
+                <input class="px-3 rounded-lg bg-yellow-400  text-gray-800 font-bold p-1 uppercase border-yellow-500 border-t border-b border-r hover:bg-yellow-200 hover:border-yellow-500 hover:text-black" type="submit" value="Add new task">
             </p>
         </form>
         <p id="message"><?php if($message) echo $message; ?></p>
@@ -362,46 +362,38 @@
         
 
         <!-- Things to do start -->
-        <h2>Thing to do<h2>
+        <div class="flex flex-row justify-center my-2">            
+            <div  class="mx-8 py-2 px-8 shadow-md no-underline rounded-full bg-blue-50 text-black-300 font-sans font-semibold text-l mr-2">Things To Do</div>
+            <div  class="mx-8 py-2 px-8 shadow-md no-underline rounded-full bg-red-200 text-black-300 font-sans font-semibold text-l mr-2">Overdue Task</div>               
+            <div  class="mx-8 py-2 px-8 shadow-md no-underline rounded-full bg-green-200 text-black-300 font-sans font-semibold text-l mr-2">Completed Task</div>         
+        </div>
         <table class="min-w-full table-auto">
             <thead class="justify-between">
                 <tr class="bg-gray-800">
                     <th class="px-16 py-2">
-                        <span class="text-gray-300">TaskCategory</span>
+                        <span class="text-gray-300 text-left">TaskCategory</span>
                     </th>    
-                    <th>
+                    <th class="px-16 py-2">
                         <span class="text-gray-300">Task</span>
                     </th>
-                    <th>
+                    <th class="px-16 py-2">
                         <span class="text-gray-300">DueDate</span>
                     </th>
-                    <th>
+                    <th class="px-16 py-2">
                         <span class="text-gray-300">Actions</span>
                     </th>
                 </tr>                                
             </thead>             
-            <?php echo $things_to_do; ?>                         
+            <?php echo $things_to_do; ?>  
+             <!-- Things to do end --> 
+             
+            <?php echo $overdue; ?> 
+            <!-- Overdue end -->
+              
+            <?php echo $completed; ?>
+            <!-- Complete end -->                      
         </table>
-        <!-- Things to do end --> 
-
-
-        <!-- Overdue start -->
-      
-        <table class="min-w-full table-auto">  
-            <tr>
-                <th>Overdue Task</th>                 
-            </tr>         
-            <?php echo $overdue; ?>            
-        </table>
-        
-        <!-- Complete start -->
        
-        <table class="min-w-full table-auto">
-            <tr>
-                <th>completed Task</th>                 
-            </tr>
-            <?php echo $completed; ?>            
-        </table>
     </section>   
 </body>
 </html>
