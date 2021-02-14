@@ -188,15 +188,15 @@
             $completed .= sprintf('  
                 <tbody class="bg-gray-200">
                     <tr class="bg-green-100 border-4 border-gray-200">
-                        <td class="px-16 py-0.5">%s</td>
-                        <td class="px-16 py-0.5">%s</td>
-                        <td class="px-16 py-0.5">%s</td>
-                        <td class="px-16 py-0.5">
+                        <td class="px-4 py-0.5 w-1/5 text-center">%s</td>
+                        <td class="px-4 py-0.5 w-2/5">%s</td>
+                        <td class="px-4 py-0.5 w-1/5 text-center">%s</td>
+                        <td class="px-4 py-0.5 w-1/5">
                             <div class="flex flex-row">
-                                <div class="invisible bg-green-500 text-white px-4 py-2 border rounded-md hover:bg-green-200 hover:border-green-500 hover:text-black " >Complete</div> 
+                                <div class="invisible bg-green-500 text-white px-4 py-2 border rounded-md hover:bg-green-200 hover:border-green-500 hover:text-black cursor-pointer" >Complete</div> 
                                 <form class="delete-btn" method="GET" action="#">                        
                                     <input type="hidden" value="%d" name="task_delete_id">                                                   
-                                    <input class="bg-red-500 text-white px-6 py-2 border rounded-md hover:bg-red-200 hover:border-red-500 hover:text-black " type="submit" value="Delete">                            
+                                    <input class="bg-red-500 text-white px-6 py-2 border rounded-md hover:bg-red-200 hover:border-red-500 hover:text-black cursor-pointer" type="submit" value="Delete">                            
                                 </form> 
                             </div>      
                         </td>
@@ -234,19 +234,19 @@
             $overdue .= sprintf('  
                 <tbody class="bg-gray-200">
                     <tr class="bg-red-100 border-4 border-gray-200">
-                        <td class="px-16 py-0.5">%s</td>
-                        <td class="px-16 py-0.5">%s</td>
-                        <td class="px-16 py-0.5">%s</td>
-                        <td class="px-16 py-0.5">
+                        <td class="px-4 py-0.5 w-1/5 text-center">%s</td>
+                        <td class="px-4 py-0.5 w-2/5">%s</td>
+                        <td class="px-4 py-0.5 w-1/5 text-center">%s</td>
+                        <td class="px-4 py-0.5 w-1/5">
                             <div class="flex flex-row">
                                 <form class="complete-btn"  method="GET" action="#">
                                     <input type="hidden" value="%d" name="task_complete_id">                        
-                                    <input class="bg-green-500 text-white px-4 py-2 border rounded-md hover:bg-green-200 hover:border-green-500 hover:text-black " type="submit" value="Complete">                                                 
+                                    <input class="bg-green-500 text-white px-4 py-2 border rounded-md hover:bg-green-200 hover:border-green-500 hover:text-black cursor-pointer" type="submit" value="Complete">                                                 
                                 </form> 
 
                                 <form class="delete-btn" method="GET" action="#">                        
                                     <input type="hidden" value="%d" name="task_delete_id">                                                   
-                                    <input class="bg-red-500 text-white px-6 py-2 border rounded-md hover:bg-red-200 hover:border-red-500 hover:text-black " type="submit" value="Delete">                            
+                                    <input class="bg-red-500 text-white px-6 py-2 border rounded-md hover:bg-red-200 hover:border-red-500 hover:text-black cursor-pointer" type="submit" value="Delete">                            
                                 </form> 
                             </div>      
                         </td>
@@ -286,19 +286,19 @@
             $things_to_do .= sprintf('  
                 <tbody class="bg-gray-200">
                     <tr class="bg-blue-50 border-4 border-gray-200">
-                            <td class="px-16 py-0.5">%s</td>
-                            <td class="px-16 py-0.5">%s</td>
-                            <td class="px-16 py-0.5">%s</td>
-                            <td class="px-16 py-0.5">
+                            <td class="px-4 py-0.5 w-1/5 text-center">%s</td>
+                            <td class="px-4 py-0.5 w-2/5">%s</td>
+                            <td class="px-4 py-0.5 w-1/5 text-center">%s</td>
+                            <td class="px-4 py-0.5 w-1/5">
                                 <div class="flex flex-row">
                                     <form class="complete-btn"  method="GET" action="#">
                                     <input type="hidden" value="%d" name="task_complete_id">                        
-                                    <input class="bg-green-500 text-white px-4 py-2 border rounded-md hover:bg-green-200 hover:border-green-500 hover:text-black " type="submit" value="Complete">                                                 
+                                    <input class="bg-green-500 text-white px-4 py-2 border rounded-md hover:bg-green-200 hover:border-green-500 hover:text-black cursor-pointer" type="submit" value="Complete">                                                 
                                     </form> 
 
                                     <form class="delete-btn" method="GET" action="#">                        
                                     <input type="hidden" value="%d" name="task_delete_id">                                                   
-                                    <input class="bg-red-500 text-white px-6 py-2 border rounded-md hover:bg-red-200 hover:border-red-500 hover:text-black " type="submit" value="Delete">                            
+                                    <input class="bg-red-500 text-white px-6 py-2 border rounded-md hover:bg-red-200 hover:border-red-500 hover:text-black cursor-pointer" type="submit" value="Delete">                            
                                     </form> 
                                 </div>      
                             </td>
@@ -329,13 +329,16 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <!-- Script(s) -->
 </head>
-<body>
-    <section class="mx-1 my-1 h-screen bg-blue-100 bg-opacity-75">
-        <h1 class="font-serif text-center text-3xl mt-0 py-5">My ToDo List</h1>
+<body class="m-0 h-screen bg-gradient-to-r from-yellow-50 to-yellow-100">
+    <section>
+        <p class="pl-2 pt-2 text-xl visible lg:invisible">Sorry, This app is only for the large screens (min. width = 1024px)</p>
+    </section> 
+    <section class="pb-2 invisible lg:visible" >
+        <h1 class="font-serif text-center text-3xl mt-0 py-3">My ToDo List</h1>
         
         <!-- Add Todo Start -->
        
-        <form class="flex flex-row justify-evenly py-4" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="GET" enctype="multipart/form-data">
+        <form class="lg:mx-auto max-w-screen-lg flex flex-row justify-evenly py-4" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="GET" enctype="multipart/form-data">
             <p>               
                 <input class="rounded-lg p-1 border-t mr-0 border-b border-l text-gray-800 border-gray-200 m-white" placeholder="Add Task..." type="text" name="task" id="task" required>
                 <label class="invisible" for="task">Task</label>
@@ -353,33 +356,33 @@
                 <label class="px-1 rounded-r-lg bg-blue-300  text-gray-800 font-bold p-1 uppercase border-blue-500 border-t border-b border-r" for="task_category">Task Category</label>
             </p>
             <p>
-                <input class="px-3 rounded-lg bg-yellow-400  text-gray-800 font-bold p-1 uppercase border-yellow-500 border-t border-b border-r hover:bg-yellow-200 hover:border-yellow-500 hover:text-black" type="submit" value="Add new task">
+                <input class="px-3 rounded-lg bg-yellow-400  text-gray-800 font-bold p-1 uppercase border-yellow-500 border-t border-b border-r hover:bg-yellow-200 hover:border-yellow-500 hover:text-black cursor-pointer" type="submit" value="Add new task">
             </p>
         </form>
-        <p id="message"><?php if($message) echo $message; ?></p>
+        <p class="text-center text-brown-400 text-lg pb-2" id="message"><?php if($message) echo $message; ?></p>
         <!-- Add Todo end -->
         
         
 
         <!-- Things to do start -->
-        <div class="flex flex-row justify-center my-2">            
+        <div class="flex flex-row justify-center mt-2 mb-5">            
             <div  class="mx-8 py-2 px-8 shadow-md no-underline rounded-full bg-blue-50 text-black-300 font-sans font-semibold text-l mr-2">Things To Do</div>
             <div  class="mx-8 py-2 px-8 shadow-md no-underline rounded-full bg-red-200 text-black-300 font-sans font-semibold text-l mr-2">Overdue Task</div>               
             <div  class="mx-8 py-2 px-8 shadow-md no-underline rounded-full bg-green-200 text-black-300 font-sans font-semibold text-l mr-2">Completed Task</div>         
         </div>
-        <table class="min-w-full table-auto">
-            <thead class="justify-between">
-                <tr class="bg-gray-800">
-                    <th class="px-16 py-2">
+        <table class="lg:mx-auto max-w-screen-lg mb-5 overflow-y-scroll">
+            <thead class="">
+                <tr class="bg-gray-800 border-4 border-gray-200">
+                    <th class="px-0 py-3 w-1/5">
                         <span class="text-gray-300 text-left">TaskCategory</span>
                     </th>    
-                    <th class="px-16 py-2">
+                    <th class="px-0 py-3 w-2/5">
                         <span class="text-gray-300">Task</span>
                     </th>
-                    <th class="px-16 py-2">
+                    <th class="px-0 py-3 w-1/5">
                         <span class="text-gray-300">DueDate</span>
                     </th>
-                    <th class="px-16 py-2">
+                    <th class="px-0 py-3 w-1/5 ">
                         <span class="text-gray-300">Actions</span>
                     </th>
                 </tr>                                
@@ -392,8 +395,8 @@
               
             <?php echo $completed; ?>
             <!-- Complete end -->                      
-        </table>
-       
-    </section>   
+        </table>      
+    </section>  
+    
 </body>
 </html>
